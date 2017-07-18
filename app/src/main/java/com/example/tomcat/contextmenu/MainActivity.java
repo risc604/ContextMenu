@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         MainListAdapter mAdapter = new MainListAdapter (this, list);
         listview.setAdapter(mAdapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                listview.showContextMenuForChild(view);
+            }
+        });
 
         // 註冊浮動功能表給 view, 在本例為 listview
         this.registerForContextMenu(listview);
@@ -71,18 +77,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        AdapterView.AdapterContextMenuInfo  info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        pos = info.position + 1;
-
-        menu.setHeaderTitle("選取 " + values[info.position]);
         MenuInflater    inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
+
+        AdapterView.AdapterContextMenuInfo  info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        pos = info.position + 1;
+        menu.setHeaderTitle("選取 " + values[info.position]);
     }
 
     @Override
@@ -92,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         return onOptionsItemSelected(item);
     }
 
+    public void onListItemClick(ListView l, View v, int position, long id){
+        l.showContextMenuForChild(v);
+    }
 
 
 }
