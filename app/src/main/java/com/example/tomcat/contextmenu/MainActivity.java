@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         listview.setAdapter(mAdapter);
 
         // 註冊浮動功能表給 view, 在本例為 listview
-        registerForContextMenu(listview);
+        this.registerForContextMenu(listview);
     }
 
     @Override
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
     {
@@ -76,11 +81,17 @@ public class MainActivity extends AppCompatActivity {
         pos = info.position + 1;
 
         menu.setHeaderTitle("選取 " + values[info.position]);
+        MenuInflater    inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         //return super.onContextItemSelected(item);
+
         return onOptionsItemSelected(item);
     }
+
+
+
 }
